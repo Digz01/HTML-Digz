@@ -6,3 +6,4 @@ idna==3.4
 requests==2.28.2
 soupsieve==2.4
 urllib3==1.26.15
+lxml==4.9.2
