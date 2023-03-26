@@ -60,6 +60,6 @@ if args.output:
             if result:
                 f.write(f'{result}\n')
             else:
-                f.write('Not found\n')
+                f.write('Write File Fail\n')
     sleep(2)            
     print(f'{Fore.GREEN}Arquivo de Saida: Finished!{Style.RESET_ALL}')
