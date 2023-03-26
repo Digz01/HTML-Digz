@@ -41,11 +41,15 @@ print("""
 """)
 sleep(2)
 
+#Fixed error: Repeat error mensages
+founds = False
 for result in results_filtrados:
     if result:
         print(f'{Fore.GREEN}Found:{Style.RESET_ALL} [{result}]')
-    else:
-        print(f'{Fore.RED}Not found{Style.RESET_ALL}')
+        founds = True
+
+if founds != True:
+    print(f'{Fore.RED}Not found{Style.RESET_ALL}')
 
 
 if args.output:
