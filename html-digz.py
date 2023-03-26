@@ -4,7 +4,6 @@ import argparse
 from colorama import Fore, Style
 from time import sleep
 
-
 #Funcao filter
 def filter_html(url, tag=None, attr=None):
     response = requests.get(url, headers={'User-Agent': 'html-digz'}, timeout=9, allow_redirects=True)
@@ -20,18 +19,36 @@ def filter_html(url, tag=None, attr=None):
     return [result.get(attr) if attr else result for result in results]
 
 
+#Funcao para filtrar paths ou urls
+def filter_paths_urls(results_filtrados, filter_type):
+
+    if filter_type == "paths":
+        results_filtrados = [result for result in results_filtrados if result and result.startswith("/")]
+
+
+    elif filter_type == "urls":
+        results_filtrados = [result for result in results_filtrados if result and result.startswith("http")]
+
+
+    return results_filtrados
+
+
 #Parser
 parser = argparse.ArgumentParser(description='Filtrar Tags e Atributos de Source-Code')
 parser.add_argument('url', type=str, help='A URL a ser filtrada')
 parser.add_argument('-tag', type=str, help='O nome da tag HTML a ser filtrada')
 parser.add_argument('-attr', type=str, help='O nome do atributo HTML a ser filtrado')
 parser.add_argument('-o', '--output', type=str, help='Nome do arquivo de saida')
-
-
+parser.add_argument('-of', '--out-filter', type=str, choices=['urls', 'paths'], help='Filtrar apenas paths ou urls')
 
 args = parser.parse_args()
 
 results_filtrados = filter_html(args.url, args.tag, args.attr)
+
+if args.out_filter:
+    results_filtrados = filter_paths_urls(results_filtrados, args.out_filter)
+
+
 
 print("""
 ███████████████▀██████████████████████████████████████████
@@ -41,7 +58,6 @@ print("""
 """)
 sleep(2)
 
-#Fixed error: Repeat error mensages
 founds = False
 for result in results_filtrados:
     if result:
