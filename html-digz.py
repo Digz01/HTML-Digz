@@ -23,11 +23,11 @@ def filter_html(url, tag=None, attr=None):
 def filter_paths_urls(results_filtrados, filter_type):
 
     if filter_type == "paths":
-        results_filtrados = [result for result in results_filtrados if result and result.startswith("/")]
+        results_filtrados = [result for result in results_filtrados if result and result.startswith("/") or (result[0].isalpha() and not result.startswith('http'))]
 
 
     elif filter_type == "urls":
-        results_filtrados = [result for result in results_filtrados if result and result.startswith("http")]
+        results_filtrados = [result for result in results_filtrados if result and result.startswith('http')]
 
 
     return results_filtrados
